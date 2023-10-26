@@ -21,7 +21,7 @@ services:
       ENV LANG: ja_JP.UTF-8
       ENV LC_ALL: ja_JP.UTF-8
       EDITOR: code
-      NPM_CONFIG_USERCONFIG: /home/node/.npmrc
+      NPM_CONFIG_USERCONFIG: ${NPM_CONFIG_USERCONFIG:-/home/node/.npmrc}
 
 volumes:
   workspace-data:
