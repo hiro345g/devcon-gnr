@@ -340,6 +340,20 @@ code devcon-gnr-mozc
 
 　以上で、mozc がインストールされた状態の devcon-gnr が使えるようになります。
 
+### npm 用環境変数の設定
+
+　npm 用環境変数の設定は devcon-gnr コンテナーの `/home/node/workspace/.npmrc` に指定するようにしてあります。これは `docker-compose.yml` の環境変数 `NPM_CONFIG_USERCONFIG` を使っています。`.env` ファイル内の `NPM_CONFIG_USERCONFIG` の指定を変更することで、この環境変数の値を変更して、自分で用意した `.npmrc` ファイルを使えるようになります。npm 用環境変数の設定を変更したい場合は、この機能を使ってください。
+
+　なお、初期設定では、開発コンテナーのユーザー node が npm パッケージをグローバルにインストールできるようにするため、`.npmrc` ファイルには、次のような指定をしてあります。
+
+```text
+prefix=/home/node/workspace/.npm-global
+```
+
+　このため、グローバルにインストールした npm パッケージは `/home/node/workspace/.npm-global` の下にインストールされます。
+
+　ちなみに、`.npmrc` で指定した `prefix` の値を変更したいだけの場合は、`docker-compose.yml` の `environment:` へ環境変数 `NPM_CONFIG_PREFIX` を追加して指定することもできます。その場合は環境変数 `NPM_CONFIG_USERCONFIG` の方は無効化しておくと無難です。
+
 ## カスタマイズ（ビルド）
 
 　カスタマイズするにはビルドが必要です。Dev Container 環境を起動する度に自動でビルドを実行する必要はないので、ビルド作業を別にしてあります。実行時用のものと似たような `docker-compose.yml` を用意することになりますが、こうしておいた方が Docker イメージのタグ名指定が設定ファイルで明示的にわかるようになります。また、意図しない更新も入りにくくなり、利用時に安定します。
