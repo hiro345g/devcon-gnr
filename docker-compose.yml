@@ -1,7 +1,7 @@
 name: devcon-gnr
 services:
   devcon-gnr:
-    image: hiro345g/devcon-gnr:1.0
+    image: hiro345g/devcon-gnr:1.1
     container_name: devcon-gnr
     hostname: devcon-gnr
     init: true

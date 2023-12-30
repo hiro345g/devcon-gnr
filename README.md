@@ -1,6 +1,6 @@
 # devcon-gnr
 
-  Development container based on mcr.microsoft.com/devcontainers/typescript-node (go, ruby, desktop-lite, docker-outside-of-docker, git, git-lfs)
+  Dev Container based on mcr.microsoft.com/devcontainers/typescript-node (go, ruby, desktop-lite, docker-outside-of-docker, git, git-lfs)
 
 　これは、`go`、`node`、`ruby` コマンドが使える簡易デスクトップ環境を提供する開発コンテナー（Dev Container）を簡単に使えるようにしたものです。次の特長があります。
 
@@ -11,7 +11,16 @@
 - 開発専用の Web ブラウザ
 - 日本語入力に対応
 
-　devcon-gnr を使うと日本語に対応した簡易 Desktop 環境の Docker コンテナーで Firefox や Chromium が用意できるようになり、Web アプリの開発などでも利用できるようになります。
+　devcon-gnr を使うと日本語に対応した簡易 Desktop 環境が動く Docker コンテナーが使えるようになります。簡易 Desktop 環境には VNC という仕組みを使って接続して利用できます。利用方法としては Web ブラウザを使う方法、VNC クライアントを使う方法があります。
+
+|クライアント| URL |
+|----|----|
+| Web ブラウザ | <http://localhost:6080> |
+| VNC クライアント | <vnc://localhost:5901> |
+
+　VNC 接続をすると、簡易 Desktop 環境で Firefox や Chromium が用意できるようになり、Web アプリの開発などでも利用できるようになります。
+
+## devcon-gnr で解決できること
 
 　Web アプリ開発時に、普段の Web ブラウザを使っていて、次のような場面で困ったことがありませんか？
 
@@ -22,6 +31,8 @@
 　開発中に利用する Web ブラウザは普段の利用方法とは違った使い方になります。そのため、開発専用の Web ブラウザ環境を用意したいときがあります。Web ブラウザのプロファイル機能を使うと、ある程度は解決するのですが、Docker コンテナーとして用意できるなら、それを使うのも「あり」だろうと考えて、devcon-gnr 環境を用意しました。
 
 　これを使うと、普段使っているデスクトップ環境から隔離されたコンテナー環境で Firefox や Chromium といった Web ブラウザを使うことができるようになります。隔離された環境なので、例えばホストファイルにステージング環境の IP と実際に使うホスト名のエントリを登録して動作させることもできます。開発中の Web アプリの動作を確認するための専用 Web ブラウザ環境なので、後で正しい IP へ戻すといった作業も発生しません。こういった環境を用意することで、効率よく Web アプリの開発ができるようになります。
+
+　VS Code の Dev Container 拡張機能を基盤としたものなので、Docker ホストマシンから隔離されたコンテナ内で Web アプリの開発を閉じることができます。複数の Web アプリ開発をしている場合、Docker ホストマシンの環境を利用していると、開発する対象の Web アプリを切り替えるときの負担が大きくなります。開発する対象の Web アプリの単位でコンテナ環境を用意すれば、コンテナ内で環境を完結させることができるので、開発する対象の Web アプリを切り替える際の負担が軽減されます。
 
 ## 使用しているもの
 
@@ -42,13 +53,17 @@
 - [Chromium](https://www.chromium.org/Home/)
 - [VLゴシックフォント](https://ja.osdn.net/projects/vlgothic/)
 
-　ちなみに、desktop-lite によるデスクトップ環境では、次のソフトウェアが使えるようになっています。
+### desktop-lite によるデスクトップ環境について
+
+desktop-lite によるデスクトップ環境では、次のソフトウェアが使えるようになっています。
 
 - [FluxBox](http://fluxbox.org/download/)
 - [TightVNC](https://www.tightvnc.com/)
 - [noVNC](https://novnc.com/)
 
-　なお、Dev Container については、開発が <https://github.com/devcontainers> でされていますので、そちらをご覧ください。
+### Dev Container について
+
+　Dev Container については、開発が <https://github.com/devcontainers> でされていますので、そちらをご覧ください。
 
 　ここで用意している `docker-compose.yml` では、開発するアプリの Git リモートリポジトリを devcon-gnr コンテナーの `/home/node/workspace` （つまり、`devcon-gnr:/home/node/workspace`）へクローンして開発することを想定しています。
 
@@ -94,36 +109,36 @@ UBUNTU_CODENAME=jammy
 
 $ docker version
 Client: Docker Engine - Community
- Cloud integration: v1.0.31
- Version:           24.0.6
+ Cloud integration: v1.0.35+desktop.5
+ Version:           24.0.7
  API version:       1.43
- Go version:        go1.20.7
- Git commit:        ed223bc
- Built:             Mon Sep  4 12:31:44 2023
+ Go version:        go1.20.10
+ Git commit:        afdd53b
+ Built:             Thu Oct 26 09:07:41 2023
  OS/Arch:           linux/amd64
  Context:           default
 
 Server: Docker Engine - Community
  Engine:
-  Version:          24.0.6
+  Version:          24.0.7
   API version:      1.43 (minimum version 1.12)
-  Go version:       go1.20.7
-  Git commit:       1a79695
-  Built:            Mon Sep  4 12:31:44 2023
+  Go version:       go1.20.10
+  Git commit:       311b9ff
+  Built:            Thu Oct 26 09:07:41 2023
   OS/Arch:          linux/amd64
   Experimental:     false
  containerd:
-  Version:          1.6.24
-  GitCommit:        61f9fd88f79f081d64d6fa3bb1a0dc71ec870523
+  Version:          1.6.26
+  GitCommit:        3dd1e886e55dd695541fdcd67420c2888645a495
  runc:
-  Version:          1.1.9
-  GitCommit:        v1.1.9-0-gccaecfc
+  Version:          1.1.10
+  GitCommit:        v1.1.10-0-g18a0cb0
  docker-init:
   Version:          0.19.0
   GitCommit:        de40ad0
 
 $ docker compose version
-Docker Compose version v2.17.3
+Docker Compose version v2.23.3-desktop.2
 ```
 
 ## ファイルの構成
@@ -175,7 +190,7 @@ devcon-gnr/
 
 　先に「環境変数」を参照して、必要なら `.env` ファイルを用意してください。カスタマイズをしたい場合は、「カスタマイズ」を参照して Docker イメージを作成してください。
 
-### 利用開始
+### 利用方法
 
 　VS Code を起動し、F1 キーを入力してコマンドパレットを表示してから、「開発コンテナー: コンテナーでフォルダを開く...（Dev Containers: Open Folder in Container...）」をクリックします。フォルダーを選択する画面になるので `${REPO_DIR}` を指定して開きます。すると `${REPO_DIR}/.devcontainer/devcontainer.json` の指定にしたがって、devcon-gnr コンテナーが Dev Container として起動します。このとき、拡張機能なども追加されます。
 それから、devcon-gnr コンテナー用の VS Code の画面となります。
@@ -356,75 +371,102 @@ prefix=/home/node/workspace/.npm-global
 
 ## カスタマイズ（ビルド）
 
-　カスタマイズするにはビルドが必要です。Dev Container 環境を起動する度に自動でビルドを実行する必要はないので、ビルド作業を別にしてあります。実行時用のものと似たような `docker-compose.yml` を用意することになりますが、こうしておいた方が Docker イメージのタグ名指定が設定ファイルで明示的にわかるようになります。また、意図しない更新も入りにくくなり、利用時に安定します。
+　デフォルトでは、Docker Hub で公開してあるビルド済みのものを使っていますが、このイメージをカスタマイズしたものを使うこともできます。`${REPO_DIR}/build_devcon` にあるものを使います。
 
-　すでにビルド済みのものを Docker Hub で公開してあるので、それを使うのが簡単です。自分でビルドをする場合は次の2つの方法があります。
+　カスタマイズしたイメージを使用するにはビルドが必要です。Dev Container 環境を起動する度に自動でビルドを実行する必要はないので、ビルド作業を別にしてあります。実行時用のものと似たような `docker-compose.yml` を用意することになりますが、こうしておいた方が Docker イメージのタグ名指定が設定ファイルで明示的にわかるようになります。また、意図しない更新も入りにくくなり、利用時に安定します。
+
+　自分でビルドをする場合は次の2つの方法があります。
 
 - VS Code を使う方法
 - build.sh を使う方法
 
-　準備も必要なので、順番に説明します。
+　カスタマイズは `${REPO_DIR}/build_devcon/` にある `.devcontainer/devcontainer.json` や `Dockerfile` を修正してください。必要なら、他のファイルもカスタマイズしてください。
+
+　この後、次の順に説明します。
+
+- ビルドの準備
+- VS Code を使ったビルド方法
+- build.sh を使ったビルド方法
+- VNC Server のパスワード、ポート番号の変更
+- `hiro345g/devcon-gnr:1.0` へ戻す方法
+- カスタムイメージの削除方法
 
 ### ビルドの準備
 
-　使用する Docker イメージを変更する必要があるので、`${REPO_DIR}/docker-compose.yml` を次のように編集します。
+　最初にビルド済みの hiro345g/devcon-gnr:1.0 をダウンロードしておきます。次のように `docker pull` コマンドを実行します。
+
+```console
+docker pull hiro345g/devcon-gnr:1.0
+```
+
+　基本は、これをカスタマイズすることになります。
+
+　次に `${REPO_DIR}/build_devcon/` にある `.devcontainer/devcontainer.json` や `Dockerfile` を修正してください。必要なら、他のファイルもカスタマイズしてください。
+
+　この後、`devcon-gnr-custom:1.0` のカスタムイメージを作成する方法を説明します。
+
+### VS Code を使ったビルド方法
+
+　VS Code を起動してから、F1 キーを入力して VS Code のコマンドパレットを表示します。入力欄へ「dev containers open」などと入力すると「開発コンテナー: コンテナーでフォルダを開く...（Dev Containers: Open Folder in Container...）」が選択肢に表示されます。これをクリックすると、フォルダーを選択する画面になるので `${REPO_DIR}/build_devcon` を指定して開きます。
+
+　`vsc-build_devcon-` で始まる Docker イメージが作成されてコンテナーが起動します。`vsc-build_devcon-` で始まる Docker イメージに `devcon-gnr:1.0` のタグをつけます。
+
+　例えば、次の例だと vsc-build_devcon-b3ed032a709b975173b2f2fcf5212c79-uid といったイメージが作成されたので、それに対して `devcon-gnr-custom:1.0` のタグをつけています。
+
+```console
+$ docker container ls |grep vsc
+351cab45fe6c   vsc-build_devcon-b3ed032a709b975173b2f2fcf5212c79-uid   （略）
+$ docker tag vsc-build_devcon-b3ed032a709b975173b2f2fcf5212c79-uid devcon-gnr-custom:1.0
+```
+
+　使用する Docker イメージを作成した `devcon-gnr-custom:1.0` へ変更する必要があるので、`${REPO_DIR}/docker-compose.yml` を次のように編集します。
 
 ```yaml
 name: devcon-gnr
 services:
   devcon-gnr:
     #image: hiro345g/devcon-gnr:1.0
-    image: devcon-gnr:1.0
+    image: devcon-gnr-custom:1.0
     container_name: devcon-gnr
     （略）
 ```
 
-　ちなみに、`${REPO_DIR}/docker-compose.yml` を編集後に、このファイルを変更せずに、もとの Docker イメージを使うようにしたい場合は、Docker Hub で公開されているビルド済みのものをダウンロードしてタグをつけます。
+### build.sh を使ったビルド方法
 
-　すでに devcon-gnr:1.0 のイメージがある場合は `docker image rm` コマンドで削除します。
+　`${REPO_DIR}/build_devcon/build.sh` スクリプトを実行すると、カスタム Docker イメージをビルドしてタグ devcon-gnr:1.0 をつけることができます。
 
-```console
-docker image rm devcon-gnr:1.0
-```
-
-　ビルド済みのものをダウンロードするには、次のように `docker pull` コマンドを実行します。
-
-```console
-docker pull hiro345g/devcon-gnr:1.0
-```
-
-　`hiro345g/devcon-gnr:1.0` に devcon-gnr:1.0 のイメージのタグをつけます。
-
-```console
-docker image tag hiro345g/devcon-gnr:1.0 devcon-gnr:1.0
-```
-
-　もとのイメージを使うように戻した後に、カスタマイズしたものに変えたい場合は、devcon-gnr:1.0 のイメージを `docker image rm` コマンドで削除してからビルドします。
-
-### VS Code を使う方法
-
-　VS Code を起動してから、F1 キーを入力して VS Code のコマンドパレットを表示します。入力欄へ「dev containers open」などと入力すると「開発コンテナー: コンテナーでフォルダを開く...（Dev Containers: Open Folder in Container...）」が選択肢に表示されます。これをクリックすると、フォルダーを選択する画面になるので `${REPO_DIR}/build_devcon` を指定して開きます。
-
-　`vsc-build_devcon-` で始まる Docker イメージが作成されてコンテナーが起動します。`vsc-build_devcon-` で始まる Docker イメージに `devcon-gnr:1.0` のタグをつけます。
-
-　例えば、次の例だと vsc-build_devcon-b3ed032a709b975173b2f2fcf5212c79-uid といったイメージが作成されたので、それに対して `devcon-gnr:1.0` のタグをつけています。
-
-```console
-$ docker container ls |grep vsc
-351cab45fe6c   vsc-build_devcon-b3ed032a709b975173b2f2fcf5212c79-uid   （略）
-$ docker tag vsc-build_devcon-b3ed032a709b975173b2f2fcf5212c79-uid devcon-gnr:1.0
-```
-
-### build.sh を使う方法
-
-　`${REPO_DIR}/build_devcon/build.sh` スクリプトでビルドをするには、`npm` コマンド、`docker` コマンドが実行できる環境が必要です。内部的に `@devcontainers/cli` を `npm exec` コマンドで実行しています。
+　`build.sh` スクリプトを利用するには、`npm` コマンド、`docker` コマンドが実行できる環境が必要です。内部的に `@devcontainers/cli` を `npm exec` コマンドで実行しています。
 
 ```console
 cd ${REPO_DIR}
 sh ./builde_devcon/build.sh
 ```
 
-### パスワード、ポート番号の変更
+　カスタマイズしたことがわかるように `build.sh` で作成した `devcon-gnr:1.0` イメージに `devcon-gnr-custom:1.0` のタグをつけます。
+
+```console
+docker image tag hiro345g/devcon-gnr:1.0 devcon-gnr:1.0
+```
+
+　`devcon-gnr:1.0` のイメージタグは必要ないので `docker image rm` コマンドで削除します。
+
+```console
+docker image rm devcon-gnr:1.0
+```
+
+　使用する Docker イメージを作成した `devcon-gnr-custom:1.0` へ変更する必要があるので、`${REPO_DIR}/docker-compose.yml` を次のように編集します。
+
+```yaml
+name: devcon-gnr
+services:
+  devcon-gnr:
+    #image: hiro345g/devcon-gnr:1.0
+    image: devcon-gnr-custom:1.0
+    container_name: devcon-gnr
+    （略）
+```
+
+### VNC Server のパスワード、ポート番号の変更
 
 　パスワード、Web版VNC Client用ポート番号、VNC Viewer用ポート番号を変更したい場合は、`build/.devcontainer/devcontainer.json` 内のファイルを編集して、`"ghcr.io/devcontainers/features/desktop-lite:1":` のオプションで指定できます。
 
@@ -436,6 +478,32 @@ sh ./builde_devcon/build.sh
         "vncPort":"5901",
     }
 }
+```
+
+### `hiro345g/devcon-gnr:1.0` へ戻す方法
+
+`hiro345g/devcon-gnr:1.0` へ戻すには、`${REPO_DIR}/docker-compose.yml` を次のように編集します。
+
+```yaml
+name: devcon-gnr
+services:
+  devcon-gnr:
+    image: hiro345g/devcon-gnr:1.0
+    #image: devcon-gnr-custom:1.0
+    container_name: devcon-gnr
+    （略）
+```
+
+### カスタムイメージの削除方法
+
+　カスタムイメージの削除方法について説明します。
+
+　一度のビルドで、想定していた使い方ができるカスタムイメージができるのが理想です。ところが、作成したカスタムイメージを動かしてみると、想定していなかった不具合が出てくるなど、うまくいかないことの方が多いものです。そういったときは、カスタムイメージの作り直しをすることになり、その際に作成済みのカスタムイメージを削除したいことがあります。
+
+　カスタムイメージを削除したい場合は、`docker image rm` コマンドで削除します。
+
+```console
+docker image rm devcon-gnr-custom:1.0
 ```
 
 ## 環境変数
